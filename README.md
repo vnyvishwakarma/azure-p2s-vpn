@@ -27,6 +27,8 @@ _Aug 2021 – Present_
 - Automated infrastructure provisioning and deployment workflows using Terraform, AWS Lambda, and Python, significantly reducing time-to-market and enhancing code quality.
 - Collaborated with development teams to define resource requirements, facilitating effective and efficient resource utilization.
 - Mentored engineering teams to adopt and implement SRE principles and DevOps best practices, fostering a culture of continuous improvement and collaboration.
+- Developed a Flask-based template in Python to streamline backend development for software engineers.
+- Utilized Python libraries such as boto3 and pandas to automate cloud infrastructure management and operations, enhancing efficiency and consistency in cloud environments.
 
 **Cloud and DevOps Specialist**  
 *Cognizant Technology, Bengaluru, India*  
