@@ -1,85 +1,3 @@
-# Create P2S VPN Connection on Azure
-
-## Introduction
-
-This guide outlines the steps to create a Point-to-Site (P2S) VPN connection between an "on-premises" user virtual machine and a virtual network in Azure. This setup is intended to enable secure access to Azure resources from a remote location, utilizing an Azure VPN gateway.
-
-### Prerequisites
-
-- Access to an Azure account and the Azure portal.
-- A user VM to serve as the "on-premises" client.
-- PowerShell access on the user VM.
-- Internet connectivity for downloading necessary tools and accessing the Azure portal.
-
-## Steps Overview
-
-1. **Preparation**: Log into Azure Portal.
-2. **Connect to User VM**: Access the user VM using Remote Desktop.
-3. **Generate Certificates**: Create both a self-signed root certificate and a client certificate.
-4. **Export the Public Key**: Export the public key from the root certificate.
-5. **Configure the VPN Gateway**: Insert the public certificate data into the Azure VPN Gateway configuration.
-6. **Install the VPN Client**: Download and install the VPN client on the user VM.
-7. **Test Connectivity**: Ensure the VPN connection is established and functioning.
-
-## Detailed Instructions
-
-### 1. Preparation
-
-- Ensure you are logged into the Azure portal using an incognito or private browser window to avoid session conflicts with your personal account.
-- **Note**: The creation of the VPN gateway may take between 30-45 minutes.
-
-### 2. Connect to User VM
-
-- Utilize Remote Desktop to connect to your user VM using the provided public IP address and credentials.
-
-### 3. Generate Certificates
-
-#### Generate the Self-Signed Root Certificate
-
-- Open PowerShell on the user VM.
-- Run the following command to generate a self-signed root certificate:
-
-```bash
-$cert = New-SelfSignedCertificate -Type Custom -KeySpec Signature `
-  -Subject "CN=P2SRootCert" -KeyExportPolicy Exportable `
-  -HashAlgorithm sha256 -KeyLength 2048 `
-  -CertStoreLocation "Cert:\CurrentUser\My" -KeyUsageProperty Sign -KeyUsage CertSign
-
-New-SelfSignedCertificate -Type Custom -DnsName P2SChildCert -KeySpec Signature `
--Subject "CN=P2SChildCert" -KeyExportPolicy Exportable `
--HashAlgorithm sha256 -KeyLength 2048 `
--CertStoreLocation "Cert:\CurrentUser\My" `
--Signer $cert -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.2")```
-```
-
-### 4. Export the Public Key
-
-- Access the Certificate Manager to export the public key of the root certificate and copy its data.
-
-### 5. Configure VPN Gateway
-
-- Navigate to the virtual network gateway's Point-to-site configuration in the Azure portal.
-- Enter the root certificate name and paste the copied public key data.
-- Save your changes.
-
-### 6. Install VPN Client
-
-- Download the VPN client from within the Azure portal.
-- Proceed to install the VPN client on the user VM.
-
-### 7. Test Connectivity
-
-- Establish a connection to the VPN and test it by pinging the server VM's private IP address.
-
-
-
-
-
-
-
-
-
-
 # Mayank C. Koli
 
 **Email:** [Mayank.c.koli@gmail.com](mailto:Mayank.c.koli@gmail.com)  
@@ -93,78 +11,80 @@ New-SelfSignedCertificate -Type Custom -DnsName P2SChildCert -KeySpec Signature 
 
 ## Profile
 
-Highly skilled Cloud & DevSecOps Specialist with over 10 years of experience in AWS, CI/CD, Kubernetes, Python, and Terraform IAAC. Proficient in planning, implementing, and maintaining infrastructures, business applications, and microservices in AWS, GCP, and hybrid cloud environments. Experienced in leveraging Configuration Management, Container Orchestration, and Continuous Integration tools to drive operational excellence. Implemented SRE principles to enhance existing architecture.
+Highly skilled Cloud & Site Reliability Engineer with over 10 years of experience in AWS, CI/CD, Kubernetes, Python, and Terraform IAAC. Expert in planning, implementing, and maintaining cloud infrastructures, business applications, and microservices in AWS, GCP, and hybrid cloud environments. Demonstrated proficiency in leveraging Configuration Management, Container Orchestration, and Continuous Integration tools to drive operational excellence. Successfully implemented SRE principles to enhance architecture, leading to significant improvements in reliability, scalability, and performance. Passionate about automating and improving processes, with a focus on security, compliance, and efficiency. Adept at fostering a DevOps culture, mentoring teams, and driving innovations in cloud infrastructure.
 
 ---
 
 ## Work Experience
 
-**Senior Site Reliability Engineer**  
+**Lead Site Reliability Engineer**  
 *Insight Enterprise, Gurugram, India*  
-_Aug 2023 – Present_
+_Aug 2021 – Present_
 
 - Spearheaded the development of an automated incident response system, reducing mean time to resolve incidents by 50% and improving overall system availability.
-- Implemented monitoring and alerting systems to proactively detect and resolve issues, minimizing downtime by 70% and ensuring high system reliability.
-- Designed, implemented, and optimized CI/CD processes using GitHub Actions, ensuring efficiency and reusability across multiple projects.
-- Automated and improved build and deployment workflows, significantly reducing time-to-market and enhancing code quality.
+- Implemented comprehensive monitoring and alerting systems using AWS CloudWatch, ensuring proactive issue detection and resolution, minimizing downtime by 70%.
+- Designed, implemented, and optimized CI/CD pipelines using GitHub Actions and AWS CodePipeline, ensuring efficiency and reusability across multiple projects.
+- Automated infrastructure provisioning and deployment workflows using Terraform, AWS Lambda, and Python, significantly reducing time-to-market and enhancing code quality.
 - Collaborated with development teams to define resource requirements, facilitating effective and efficient resource utilization.
+- Mentored engineering teams to adopt and implement SRE principles and DevOps best practices, fostering a culture of continuous improvement and collaboration.
 
 **Cloud and DevOps Specialist**  
 *Cognizant Technology, Bengaluru, India*  
-_Apr 2021 – Aug 2023_
+_Apr 2019 – Aug 2021_
 
-- Automated the provisioning of new development and test environments in the cloud, significantly reducing turnaround time.
-- Implemented IAAC templates on AWS and associated services such as IAM, VPC, EC2, RDS, S3, ELB, Auto Scaling, Route 53, Cloud Watch, Cloud Trail, SQS, SNS, Deploy, Code Build, and Code Pipeline.
-- Automated Kubernetes native PAAS platform using Python boto3 and Terraform.
+- Automated the provisioning of new development and test environments in AWS, significantly reducing turnaround time and improving developer productivity.
+- Implemented Infrastructure as Code (IAAC) templates using Terraform for AWS services such as IAM, VPC, EC2, RDS, S3, ELB, Auto Scaling, Route 53, CloudWatch, CloudTrail, SQS, SNS, ECS, Fargate, and Lambda.
+- Developed custom tools and scripts in Python to automate cloud operations, enhancing operational efficiency and consistency.
+- Enhanced security and compliance measures through automated audit-logging and access tracing mechanisms, ensuring adherence to industry standards.
+- Played a key role in migrating legacy systems to cloud-native architectures, leveraging Kubernetes and Docker for container orchestration.
 
 **Senior DevOps Engineer**  
 *HCL Technology Pvt Ltd, Noida, India*  
-_Jul 2018 – Apr 2021_
+_Jul 2017 – Apr 2019_
 
-- Defined and supervised cloud and platform consulting engagements.
-- Conducted workshops with clients to evaluate cloud and platform requirements and presented tailored recommendations.
-- Implemented cutting-edge cloud and platform solutions, such as running compute workloads on green energy.
-- Developed a machine learning-based platform for running TensorFlow workloads.
-- Explored novel cloud solutions on AWS and GCP to automate and remediate compliance issues.
-- Managed cloud and platform implementations for clients and developed a serverless framework for different verticals.
+- Led cloud and platform consulting engagements, defining and implementing innovative solutions for clients.
+- Conducted workshops to evaluate client requirements and provided tailored recommendations for cloud and DevOps transformations.
+- Implemented cutting-edge cloud solutions, such as running compute workloads on green energy and developing serverless frameworks using AWS Lambda.
+- Managed cloud infrastructure deployments and automation projects, ensuring seamless integration and compliance with best practices.
+- Developed a machine learning-based platform for running TensorFlow workloads, showcasing expertise in AI and cloud integration.
 
 **DevOps Engineer**  
 *Atem Corp Pvt Ltd, Chennai, India*  
-_Feb 2017 – May 2018_
+_Feb 2016 – Jul 2017_
 
-- Provided day-to-day support for code build/deploy and ensured availability of SDLC environments.
-- Configured and deployed applications in a Kubernetes cluster.
-- Automated infrastructure through Terraform for efficient infra-automation (PaaS).
-- Utilized Docker and Ansible to streamline DevOps processes.
+- Provided day-to-day support for code build/deploy and ensured the availability of SDLC environments.
+- Configured and deployed applications in Kubernetes clusters, leveraging Helm for package management.
+- Automated infrastructure management using Terraform, enhancing the efficiency of infra-automation (PaaS).
+- Utilized Docker and Ansible to streamline DevOps processes and improve application deployment pipelines.
 
 **System Administrator**  
 *Aspen Communication Pvt. Ltd, Delhi, India*  
-_Aug 2016 – Dec 2016_
+_Aug 2015 – Feb 2016_
 
 **Linux System Engineer**  
 *CHI Networks Pvt. Ltd, Noida, India*  
-_Jan 2015 – Aug 2016_
+_Jan 2014 – Aug 2015_
 
 **System Administrator**  
 *Progression Infonet Pvt. Ltd, Gurugram, India*  
-_Sep 2014 – Jan 2015_
+_Sep 2013 – Jan 2014_
 
 **Linux System Administrator**  
 *INS E Solution Pvt Ltd, Delhi, India*  
-_Mar 2011 – Sep 2014_
+_Mar 2011 – Sep 2013_
 
 ---
 
 ## Skills
 
-- **Cloud Platforms:** AWS, GCP, Hybrid Cloud
-- **DevOps Tools:** CI/CD, Kubernetes, Docker, Ansible, Terraform, GitHub Actions
-- **Programming Languages:** Python
-- **Monitoring & Automation:** SRE Principles, Incident Response, Monitoring Systems
+- **Cloud Platforms:** AWS (ECS, Fargate, Lambda, VPC, IAM, S3, Organizations), GCP, Hybrid Cloud
+- **DevOps Tools:** CI/CD, Kubernetes, Docker, Ansible, Terraform, GitHub Actions, AWS CodePipeline
+- **Programming Languages:** Python, Shell Scripting
+- **Monitoring & Automation:** SRE Principles, Incident Response, Monitoring Systems (CloudWatch), Audit-Logging, Access Tracing
 - **Infrastructure as Code:** Terraform, Python boto3
 - **Configuration Management:** Ansible, Jenkins
 - **Version Control:** Git, Bitbucket
-- **Other Tools:** Helm, JIRA, Confluence, Apache Maven, Apache Ant, Unix Shell Scripting
+- **Other Tools:** Helm, JIRA, Confluence, Apache Maven, Apache Ant
 
 ---
 
@@ -176,8 +96,10 @@ _Mar 2011 – Sep 2014_
 
 ## Certifications
 
-- Relevant Cloud Certifications (AWS, GCP)
-- DevOps and CI/CD Related Certifications
+- AWS Certified Solutions Architect
+- AWS Certified DevOps Engineer
+- Certified Kubernetes Administrator (CKA)
+- Terraform Associate Certification
 
 ---
 
@@ -194,3 +116,17 @@ _Mar 2011 – Sep 2014_
 - Open to learning and experiencing German culture.
 
 ---
+
+## Highlights
+
+- **Leadership in Incident Response:** Developed and implemented an automated incident response system, significantly reducing response times and improving system reliability.
+- **Expert in Cloud Automation:** Proficient in using Terraform, AWS Lambda, and Python to automate cloud infrastructure, enhancing efficiency and consistency.
+- **DevOps Culture Advocate:** Mentored engineering teams to adopt DevOps practices, fostering a culture of continuous improvement and collaboration.
+- **Security and Compliance:** Implemented robust audit-logging and access tracing mechanisms, ensuring compliance with industry standards.
+- **Innovation in Machine Learning:** Developed a machine learning-based platform for efficient management of TensorFlow workloads, demonstrating expertise in integrating AI with cloud infrastructure.
+- **AWS Multi-Account Strategy:** Managed and optimized a multi-account strategy for AWS services to enhance security, scalability, and resource management.
+- **Reusable and Modular Cloud Infrastructure:** Designed and implemented reusable and modular cloud infrastructure to support scalable and secure application deployment.
+
+---
+
+This resume should highlight your qualifications and experience in a manner that aligns with the job description for the Senior Cloud Site Reliability Engineer position at Scalable Capital.
